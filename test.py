@@ -1,10 +1,12 @@
-import parsers
-res = parsers.parse_acm(None)
+import parsers, time
+res = parsers.parse(parsers.ACM)
 print res
 if not res:
   print "FAIL"
 else:
-  for text in res.keys():
-    print text
-  for link in res.values():
-    print link
+  for (ref, paper) in res.iteritems():
+    if paper.url:
+      print "parsing: %s via %s"%(ref, paper.url)
+      paper.references=parsers.parse(parsers.ACM, paper.url)
+      time.sleep(5)
+      break
