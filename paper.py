@@ -1,3 +1,9 @@
+# the following format in a dictionary is used for references:
+# citation : Paper instance                                                    
+# Where Paper instance may be None. Note that citations are string             
+# representations, which means that they are not unique. Paper instances are   
+# unique, but parsing may fail (leading to the value of None).                 
+
 class Paper():
   authors=[]
   title=""
@@ -30,3 +36,6 @@ class Paper():
       return self.journal
     else:
       return self.proceeding
+
+  def export(self, formatter):
+    formatter(authors, title, year, self.get_publication_title(), doi, url, references)
