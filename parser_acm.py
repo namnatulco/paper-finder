@@ -33,7 +33,8 @@ class ACM_Parser(Parser):
       text=resp.text
     elif self.file:
       text=open(self.file)
-    else raise Exception("invalid state!")
+    else:
+      raise Exception("invalid state!")
   
   def process(self):
     if not self.text:

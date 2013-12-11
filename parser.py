@@ -41,7 +41,8 @@ class Parser():
       pass
     elif uri:
       pass
-    else raise Exception("Invalid state!")
+    else:
+      raise Exception("Invalid state!")
   
   def process(self):
     pass

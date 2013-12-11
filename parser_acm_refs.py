@@ -36,7 +36,8 @@ class ACM_References_Parser(Parser):
       text=resp.text
     elif self.file:
       text=open(self.file)
-    else raise Exception("invalid state!")
+    else:
+      raise Exception("invalid state!")
   
   def process(self):
     if not self.text:
@@ -46,14 +47,18 @@ class ACM_References_Parser(Parser):
     # first td, and the actual text description (possibly with linking to the 
     # paper pages, in a variety of formats) in the second td.
     # <tr><td><div class="abstract">number</div></td><td> citation </td>
+    print self.text
+    if self.text and self.debugmode:
+      for x in self.text:
+        print x
     soup = BS(self.text)
     
     trs = soup.find_all('tr')
     citations = {}
     for i in trs:
-        divs = i.find_all('div')
-        if not divs:
-          continue
+      divs = i.find_all('div')
+      if not divs:
+        continue
       try:
         if divs[0].has_attr('class') and (divs[0]['class'][0] == 'abstract'):
           #reference as outputted.
