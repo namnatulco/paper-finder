@@ -19,7 +19,7 @@ import re
 from paper import Paper
 from parser import Parser
 
-class ACM_Parser(Parser):
+class ACMParser(Parser):
   def read(self):
     if self.uri:
       #use the flat layout to make sure the references are received
@@ -31,12 +31,12 @@ class ACM_Parser(Parser):
         self.uri +="preflayout=flat"
       resp = requests.get(self.uri)
       text=resp.text
-    elif self.file:
-      text=open(self.file)
+    elif self.myFile:
+      text=open(self.myFile)
     else:
       raise Exception("invalid state!")
   
   def process(self):
     if not self.text:
       raise Exception("Invalid state!")
-    self.paper=ACM_References_Parser(self.text)
+    self.paper=ACMReferencesParser(self.text)

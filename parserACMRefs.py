@@ -22,7 +22,7 @@ import re
 from paper import Paper
 from parser import Parser
 
-class ACM_References_Parser(Parser):
+class ACMReferencesParser(Parser):
   def read(self):
     if self.uri:
       #use the flat layout to make sure the references are received
@@ -34,8 +34,9 @@ class ACM_References_Parser(Parser):
         self.uri +="preflayout=flat"
       resp = requests.get(self.uri)
       text=resp.text
-    elif self.file:
-      text=open(self.file)
+    elif self.myFile:
+      print "reading from: ",myFile
+      text=open(self.myFile)
     else:
       raise Exception("invalid state!")
   
@@ -105,7 +106,7 @@ class ACM_References_Parser(Parser):
     if self.uri:
       self.paper=Paper(None,None,None,None,url=self.uri,references=citations)
     else:
-      self.paper=Paper(None,None,None,None,other_data="Parsed from "+self.file,references=citations)
+      self.paper=Paper(None,None,None,None,other_data="Parsed from "+self.myFile,references=citations)
     return self.paper
 
 #def parse_ieee(url=...)

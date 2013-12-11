@@ -22,22 +22,22 @@ from paper import Paper
 class Parser():
   debugmode=False
   uri=None
-  file=None
+  myFile=None
   text=None
   paper=None
   
-  def __init__(self, file=None, uri=None, text=None):
+  def __init__(self, myFile=None, uri=None, text=None):
     if not file and not uri and not text:
       raise Exception("Must provide file, text or uri")
     elif text:
       self.text=text
-    elif file:
-      self.file=file
+    elif myFile:
+      self.myFile=myFile
     elif uri:
       self.uri=uri
   
   def read(self):
-    if file:
+    if myFile:
       pass
     elif uri:
       pass
