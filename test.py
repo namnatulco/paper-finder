@@ -1,12 +1,10 @@
 import time
-from parser import Parser
-from parser_acm_refs import ACM_References_Parser
+from parserACMRefs import ACMReferencesParser
 
-parser = Parser(file="test_acm.txt")
-parser.debugmode=True
-print parser.debugmode
-parser.read()
+parser = ACMReferencesParser(myFile="test_acm.txt")
+parser.read(fileToMemory=True)
 res = parser.process()
+resultList=[]
 
 #res = parsers.parse(parsers.ACM)
 if not res or not res.references:
@@ -16,6 +14,16 @@ else:
   for (ref, paper) in res.references.iteritems():
     if paper.url:
       print "parsing: %s via %s"%(ref, paper.url)
-      paper.references=parsers.parse(parsers.ACM, paper.url)
-      time.sleep(5)
-      break
+      itemparser = ACMReferencesParser(uri=paper.url)
+      try:
+        itemparser.read()
+      except:
+        print "Error reading URL:",paper.url
+        continue
+      try:
+        tehresult = itemparser.process()
+        if tehresult:
+          resultList.append(tehresult)
+      except:
+        print "failed, ignoring",ref
+      time.sleep(1)
