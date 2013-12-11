@@ -23,7 +23,7 @@ from paper import Paper
 from parser import Parser
 
 class ACMReferencesParser(Parser):
-  def read(self):
+  def read(self, fileToMemory=False):
     if self.uri:
       #use the flat layout to make sure the references are received
       if "preflayout=flat" not in self.uri:
@@ -33,10 +33,15 @@ class ACMReferencesParser(Parser):
           self.uri += "&"
         self.uri +="preflayout=flat"
       resp = requests.get(self.uri)
-      text=resp.text
+      self.text=resp.text
     elif self.myFile:
-      print "reading from: ",myFile
-      text=open(self.myFile)
+      if fileToMemory:
+        self.text=""
+        with open(self.myFile, 'r') as f:
+          for line in f:
+            self.text+=line
+      else:
+        self.text=open(self.myFile)
     else:
       raise Exception("invalid state!")
   
